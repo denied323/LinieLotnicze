@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Zapisz się na lot</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('podanieOrderForm')"/>
+
+<div class="card-body container">
+
+
+
+    <form th:method="POST" th:object="${order}" th:action="@{/podanieOrderForm.html}">
+        <fieldset>
+
+            <div class="form-group">
+
+                <input id="name" name="name" type="hidden" th:value="${zalogowany.name}"
+                       class="form-control" required="true" />
+
+            </div>
+
+            <div class="form-group">
+                <input id="surname" name="surname" type="hidden" th:value="${zalogowany.surname}"
+                       class="form-control" required="true" />
+            </div>
+
+
+
+
+            <div class="form-group">
+                <input id="idLotu" name="idLotu" type="hidden" th:value="${zzz}"
+                       class="form-control" required="true" />
+            </div>
+
+            <div class="form-group">
+                <input id="vehicle" name="vehicle" type="hidden" th:value="${zzz}"
+                       class="form-control" required="true" />
+            </div>
+
+            Podaj ilość miejsc (max <span th:text="${dostepne}"></span> możesz zamówić miejsc):
+            <div class="form-group">
+                <input id="ilosc" name="ilosc" type="number" th:max="${dostepne}"
+                       class="form-control" required="true" />
+            </div>
+
+            <div class="form-group">
+                <input id="price" name="price" type="hidden" th:value="${cena}"
+                       class="form-control" required="true" />
+            </div>
+
+
+            <div class="form-group">
+                <input id="idUsera" name="idUsera" type="hidden" th:value="${zalogowany.id}"
+                       class="form-control" required="true" />
+            </div>
+
+            <div class="form-group">
+                <input id="user" name="user" type="hidden" th:value="${zalogowany.id}"
+                       class="form-control" required="true" />
+            </div>
+
+
+            <div class="form-group">
+
+                <input id="status" name="status" type="hidden" th:value="1"
+                       class="form-control" required="true" />
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <input type="submit" class="btn btn-lg btn-primary btn-block" value="Wyślij zgłoszenie"/>
+                </div>
+
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html></html>

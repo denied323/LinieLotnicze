@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Detale szczegółowe</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('vehicleDetails')"/>
+
+<b id="main" class="container">
+<center>
+
+    <H2>Dane lotu nr <b><span th:text="${vehicle.id}"></span></H2><br><br></b>
+    Klasa lotu: <b><span th:text="${vehicle.VehicleClass.name}"></span><br/></b>
+    Model samolotu: <b><span th:text="${vehicle.vehicleName.name}"></span><br/></b>
+    Miejsce startu lotu: <b><span th:text="${vehicle.start}"></span><br/></b>
+    Miejsce końca lotu: <b><span th:text="${vehicle.destination}"></span><br/></b>
+    Cena: <b><span th:text="${vehicle.price}"> zł</span><br/></b>
+    ilosc miejsc: <b><span th:text="${vehicle.places}"></span><br/></b>
+    Data startu lotu: <b>[[${#dates.format(vehicle.dateStart, 'dd-MM-yyyy')}]]<br/></b>
+    Czas startu lotu: <b><span th:text="${vehicle.startTime}"></span><br/></b>
+    Data końca lotu: <b>[[${#dates.format(vehicle.dateEnd, 'dd-MM-yyyy')}]]<br/></b>
+    Czas końca lotu:  <b><span th:text="${vehicle.endTime}"></span><br/></b>
+    Akcesoria <span th:if="${vehicle.vehicleClass.id == 1}">które nie wliczają się w cenę lotu i jest samoobsługa</span><span th:if="${vehicle.vehicleClass.id == 2}">które nie wliczają się w cenę lotu i stewardessy je podają</span><span th:if="${vehicle.vehicleClass.id == 3}">które wliczają się w cenę lotu i stewardessy je podają</span>:     <span th:if="${vehicle.accessories.isEmpty()}">Brak</span><br/>
+    <span th:unless="${vehicle.accessories.isEmpty()}">
+
+        <span th:each="acc : ${vehicle.accessories}"> <span th:text="${acc.name}"></span> <span th:if="${vehicle.vehicleClass.id==1 || vehicle.vehicleClass.id==2}" th:text="${acc.price}"> zł</span> <br/>
+    </span>
+    </span>
+
+    <!---->
+<!--<span th:each="acc : ${vehicle.accessories}" th:if="${vehicle.vehicleClass.id==1 || vehicle.vehicleClass.id==2}" th:text="${acc.price}"></span> zł-->
+           <!--<span th:each="acc : ${vehicle.accessories}"><span th:if="${vehicle.vehicleClass.id==3}">0 zł</span>-->
+<!--</span>-->
+
+<br>
+
+
+
+<a sec:authorize="isAuthenticated()" class="btn btn-error" th:href="@{podanieOrderForm.html(id=${vehicle.id})}">Zapisz</a>
+
+
+<a class="btn btn-success" href="/vehicleList.html">Wstecz</a>
+</div>
+</center>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

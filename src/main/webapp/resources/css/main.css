@@ -1,0 +1,54 @@
+#main{
+    min-height: 300px;
+}
+
+.kontener {
+    /*position: relative;*/
+    text-align: center;
+    color: white;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.carousel-control-next{
+    /*border: 2px solid black;*/
+    background-image: none;
+}
+
+.carousel-control-prev{
+    /*border: 2px solid black;*/
+    background-image: none;
+}
+
+/*.carousel-control-next-icon:after*/
+/*{*/
+
+    /*!*position: absolute;*!*/
+    /*!*text-align: center;*!*/
+    /*content: '>';*/
+    /*font-size: 62px;*/
+    /*color: darkred;*/
+/*}*/
+
+/*.carousel-control-prev-icon:after {*/
+    /*!*position: absolute;*!*/
+    /*!*text-align: center;*!*/
+    /*content: '<';*/
+    /*font-size: 62px;*/
+    /*color: darkred;*/
+/*}*/
+
+
+
+h1{
+    color: red;
+}
+
+#demo{
+    background-color: #363A3D;
+}

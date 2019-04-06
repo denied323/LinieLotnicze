@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:fragment="header-css">
+        <!-- this is header-css -->
+        <!--<link rel="stylesheet" type="text/css"-->
+              <!--href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>-->
+
+ <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="statics/css/main.css"/>
+
+    </div>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div th:fragment="header(pageName)">
+
+
+
+
+    <div id="demo" class="carousel slide" data-ride="carousel">
+
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+            <li data-target="#demo" data-slide-to="0" class="active"></li>
+            <li data-target="#demo" data-slide-to="1"></li>
+
+
+
+            <!--<li data-target="#demo" data-slide-to="2"></li>-->
+        </ul>
+
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <a th:href="@{/vehicleList.html(all)}">
+                <div class="kontener">
+
+
+                    <img border="0" src="statics/img/vehicleList.png" width="670px" height="135px">
+                    <div class="centered"><h1>Oferta</h1></div>
+
+                </div>
+                </a>
+            </div>
+
+
+            <div class="carousel-item">
+
+                <a th:href="@{/about.html}">
+                <div class="kontener">
+
+                    <img border="0" src="statics/img/About.png" width="670px" height="135px">
+                    <div class="centered"><h1>O nas</h1></div>
+
+                </div>
+                </a>
+            </div>
+
+
+            </div>
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <nav id="header" th:fragment="header(pageName)" class="navbar navbar-light bg-dark">
+        <div class="navbar-nav-scroll">
+            <ul class="nav nav-tabs bg-light">
+
+
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${pageName eq 'home'}?'active'" th:href="@{/}">Strona główna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${pageName eq 'vehicleList'}?'active'" th:href="@{/vehicleList.html(all)}">Oferta</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${pageName eq 'about'}?'active'"  th:href="@{/about.html}">O nas</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" th:classappend="${pageName eq 'orderList'}?'active'"  th:href="@{/orderList.html}">Koszyk</a>
+                </li>
+                <li  sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+                    <a class="nav-link" th:classappend="${pageName eq 'about'}?'active'"  th:href="@{/vehicleNameList.html}">Lista samolotów</a>
+                </li>
+                <li  sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+                    <a class="nav-link" th:classappend="${pageName eq 'about'}?'active'"  th:href="@{/accessoryList.html}">Lista akcesorii</a>
+                </li>
+
+
+
+
+
+
+
+                    </li>
+
+
+
+            </ul>
+
+
+
+        </div>
+
+        <ul class="nav nav-tabs bg-light">
+
+            <li class="nav-item" sec:authorize="isAnonymous()">
+                <a class="nav-link"  th:classappend="${pageName eq 'registration'}?'active'" href="/registrationForm.html">Rejestracja</a>
+            </li>
+
+            <li class="nav-item" sec:authorize="isAnonymous()">
+                <a class="nav-link"  th:classappend="${pageName eq 'login'}?'active'" href="/login">Logowanie</a>
+            </li>
+
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+
+
+                <a class="nav-link" href="#" onclick="document.getElementById('logout').submit()">Witaj, <span sec:authentication="name"/>! Wyloguj się</a>
+                <form th:action="@{/logout}" id="logout" method="post" style="display: none;">
+                    <input
+                            type="hidden"
+                            th:name="${_csrf.parameterName}"
+                            th:value="${_csrf.token}"/>
+                </form>
+            </li>
+
+
+
+
+        </ul>
+
+
+
+
+
+
+
+
+    </nav>
+
+
+</div>
+
+
+
+
+</body>
+</html>

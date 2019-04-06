@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Edycja o nas</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('aboutFor')"/>
+
+<div class="card-body container">
+
+    <form th:method="POST" th:object="${about}" th:action="@{/aboutForm.html}">
+        <fieldset>
+            <h1>Edycja zakładki " O nas"</h1>
+
+
+            <div class="form-group">
+                <label for="name" class="bmd-label-floating">Nazwa:</label>
+                <input id="name" type="text" th:field="*{name}"
+                       class="form-control" th:classappend="${#fields.hasErrors('name')}?'is-invalid'"
+                       required="true"/>
+                <div class="error text-danger" th:if="${#fields.hasErrors('name')}">
+                    <p th:each="err : ${#fields.errors('name')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="opis" class="bmd-label-floating">Opis:</label>
+                <input id="opis" type="text" th:field="*{opis}"
+                       class="form-control" th:classappend="${#fields.hasErrors('opis')}?'is-invalid'"
+                       required="true"/>
+                <div class="error text-danger" th:if="${#fields.hasErrors('opis')}">
+                    <p th:each="err : ${#fields.errors('opis')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dlaczego" class="bmd-label-floating">Dlaczego my:</label>
+                <input id="dlaczego" type="text" th:field="*{dlaczego}"
+                       class="form-control" th:classappend="${#fields.hasErrors('dlaczego')}?'is-invalid'"
+                       required="true"/>
+                <div class="error text-danger" th:if="${#fields.hasErrors('dlaczego')}">
+                    <p th:each="err : ${#fields.errors('dlaczego')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <input type="submit" class="btn btn-lg btn-primary btn-block" value="Zapisz"/>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <input type="hidden" th:field="*{id}"/>
+                    <input
+                            type="hidden"
+                            th:name="${_csrf.parameterName}"
+                            th:value="${_csrf.token}"/>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+</div>
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Formularz</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div class="card-body container">
+
+    <form th:method="POST" th:object="${vehicle}" th:action="@{/vehicleForm.html}">
+        <fieldset>
+            <h1>Dodawanie/Edycja</h1>
+
+                <div class="form-group">
+                    <select th:field="*{vehicleName.id}" class="form-control"
+                            th:classappend="${#fields.hasErrors('vehicleName.id')}?'is-invalid'">
+                        <option value="-1">--wybierz nazwę samolotu--</option>
+                        <option th:each="type : ${vehicleNames}"
+                                th:value="${type.id}"
+                                th:text=" ${type.name}"
+                        />
+                    </select>
+
+                    <div class="error text-danger" th:if="${#fields.hasErrors('vehicleName.id')}">
+                        <p th:each="err : ${#fields.errors('vehicleName.id')}" th:text="${err}"></p>
+                    </div>
+                </div>
+
+            <div class="form-group">
+                <label for="start" class="bmd-label-floating">miejsce startu:</label>
+                <input id="start" type="text" th:field="*{start}"
+                       class="form-control" th:classappend="${#fields.hasErrors('start')}?'is-invalid'"
+                       required="true"/>
+                <div class="error text-danger" th:if="${#fields.hasErrors('start')}">
+                    <p th:each="err : ${#fields.errors('start')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="destination" class="bmd-label-floating">miejsce docelowe:</label>
+                <input id="destination" type="text" th:field="*{destination}"
+                       class="form-control" th:classappend="${#fields.hasErrors('destination')}?'is-invalid'"
+                       required="true"/>
+                <div class="error text-danger" th:if="${#fields.hasErrors('destination')}">
+                    <p th:each="err : ${#fields.errors('destination')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="price" class="bmd-label-floating">Cena:</label>
+                <input id="price" type="text" th:field="*{price}"
+                       class="form-control" th:classappend="${#fields.hasErrors('price')}?'is-invalid'"
+                       required="true"/>
+                <div class="error text-danger" th:if="${#fields.hasErrors('price')}">
+                    <p th:each="err : ${#fields.errors('price')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="places" class="bmd-label-floating">ilość miejsc:</label>
+                <input id="places" type="text" th:field="*{places}"
+                       class="form-control" th:classappend="${#fields.hasErrors('places')}?'is-invalid'"
+                       required="true"/>
+                <div class="error text-danger" th:if="${#fields.hasErrors('places')}">
+                    <p th:each="err : ${#fields.errors('places')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="dateStart" class="bmd-label-floating">data startu:</label>
+                <input id="dateStart" type="date" th:field="*{dateStart}"
+                       class="form-control" th:classappend="${#fields.hasErrors('dateStart')}?'is-invalid'"
+                       required="true"/>
+                <div class="error text-danger" th:if="${#fields.hasErrors('dateStart')}">
+                    <p th:each="err : ${#fields.errors('dateStart')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="startTime" class="bmd-label-floating">czas startu:</label>
+                <input id="startTime" type="time" th:field="*{startTime}"
+                       class="form-control" th:classappend="${#fields.hasErrors('startTime')}?'is-invalid'"
+                       required="true"/>
+                <div class="error text-danger" th:if="${#fields.hasErrors('startTime')}">
+                    <p th:each="err : ${#fields.errors('startTime')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="dateEnd" class="bmd-label-floating">data końca:</label>
+                <input id="dateEnd" type="date" th:field="*{dateEnd}"
+                       class="form-control" th:classappend="${#fields.hasErrors('dateEnd')}?'is-invalid'"
+                       required="true"/>
+                <div class="error text-danger" th:if="${#fields.hasErrors('dateEnd')}">
+                    <p th:each="err : ${#fields.errors('dateEnd')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="endTime" class="bmd-label-floating">czas końca:</label>
+                <input id="endTime" type="time" th:field="*{endTime}"
+                       class="form-control" th:classappend="${#fields.hasErrors('endTime')}?'is-invalid'"
+                       required="true"/>
+                <div class="error text-danger" th:if="${#fields.hasErrors('endTime')}">
+                    <p th:each="err : ${#fields.errors('endTime')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <select th:field="*{vehicleClass.id}" class="form-control"
+                        th:classappend="${#fields.hasErrors('vehicleClass.id')}?'is-invalid'">
+                    <option value="-1">--wybierz typ pojazdu--</option>
+                    <option th:each="type : ${vehicleClasses}"
+                            th:value="${type.id}"
+                            th:text=" ${type.name}"
+                    />
+                </select>
+                <div class="error text-danger" th:if="${#fields.hasErrors('vehicleClass.id')}">
+                    <p th:each="err : ${#fields.errors('vehicleClass.id')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div th:each="acc : ${accessoryList}" class='checkbox' style="left:25px;">
+                    <input th:id="${acc}" type="checkbox" th:field="*{accessories}"
+                           th:value="${acc.id}"/>
+                    <label th:text="${acc.name}" th:for="${acc}"></label>
+                </div>
+
+                <div class="error text-danger" th:if="${#fields.hasErrors('accessories')}">
+                    <p th:each="err : ${#fields.errors('accessories')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <input type="submit" class="btn btn-lg btn-primary btn-block" value="Zapisz"/>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <input type="hidden" th:field="*{id}"/>
+                    <input
+                            type="hidden"
+                            th:name="${_csrf.parameterName}"
+                            th:value="${_csrf.token}"/>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+</div>
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

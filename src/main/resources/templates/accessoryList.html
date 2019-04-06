@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+
+    <title>lista samolotow</title>
+</head>
+<body class="card">
+<div th:replace="shared/header :: header('accessoryList')"/>
+
+
+<div id="main" class="card-body">
+
+
+    <form th:method="POST" th:action="@{accessoryList.html}" th:object="${searchCommand}">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <input th:field="*{phrase5}" placeholder="z:" class="form-control"
+                       th:classappend="${#fields.hasErrors('phrase5')}?'is-invalid'"/>
+                <div class="error text-danger" th:if="${#fields.hasErrors('phrase5')}">
+                    <p th:each="err : ${#fields.errors('phrase5')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group col-md-3">
+
+            <input th:field="*{maxPrice}" placeholder="Cena do" class="form-control"
+                   th:classappend="${#fields.hasErrors('maxPrice')}?'is-invalid'"/>
+            <div class="error text-danger" th:if="${#fields.hasErrors('maxPrice')}">
+                <p th:each="err : ${#fields.errors('maxPrice')}" th:text="${err}"></p>
+            </div>
+
+        </div>
+
+
+
+
+        <div class="row">
+
+            <div class="form-group col-md-8"></div>
+
+            <div class="form-group col-md-2">
+                <a th:if="${searchCommand.isEmpty() eq false or #fields.hasErrors('*')}" th:href="@{accessoryList.html(all)}" class="btn btn-success">
+                    <span class="glyphicon glyphicon-refresh"></span> Pokaż wszystko
+                </a>
+            </div>
+
+            <div class="form-group col-md-2">
+                <button type="submit" class="btn btn-info">
+                    <span class="glyphicon glyphicon-search"></span> Wyszukaj
+                </button>
+            </div>
+        </div>
+    </form>
+
+
+
+    <div th:if="${accessoryListPage.hasContent() eq false}">
+        <span th:if="${searchCommand.isEmpty()}">Brak pojazdów w bazie</span>
+        <span th:unless="${searchCommand.isEmpty()}">Brak wyników wyszukiwania</span>
+    </div>
+    <div th:if="${accessoryListPage.hasContent() eq true}">
+
+
+
+            <span th:if="${searchCommand.isEmpty()}">
+                Baza zawiera [[${accessoryListPage.totalElements}]] akcesoriów
+            </span>
+        <span th:unless="${searchCommand.isEmpty()}">
+                Wynik wyszukiwania: [[${accessoryListPage.totalElements}]] akcesoriów
+            </span>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>Nazwa</th>
+                <th>Cena</th>
+                <th sec:authorize="hasRole('ADMIN')">Opcje</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="accessory : ${accessoryListPage.content}">
+
+
+
+                <td><span th:text="${accessory.id}"></span><br/></td>
+                <td><span th:text="${accessory.name}"></span><br/></td>
+                <td><span th:text="${accessory.price}"></span> zł<br/></td>
+
+
+                <td sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="btn btn-danger" th:href="@{accessoryList.html(did=${accessory.id})}">Usuń</a>
+                    <a class="btn btn-success" th:href="@{accessoryForm.html(id=${accessory.id})}">Edytuj</a>
+                </td>
+
+            </tr>
+
+            </tbody>
+        </table>
+
+        <div th:replace="shared/pagination :: pager('/accessoryList.html', ${accessoryListPage})"></div>
+
+    </div>
+
+    <a sec:authorize="hasRole('ADMIN')" class="btn btn-success" href="accessoryForm.html">Dodaj Nowy</a>
+
+</div>
+
+<a class="btn btn-success" href="accessoryForm.html">Dodaj Nowy</a>
+
+
+
+</div>
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

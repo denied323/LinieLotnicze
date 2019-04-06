@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <link rel="stylesheet" type="text/css"
+          href="statics/css/main.css"/>
+    <title>O nas</title>
+</head>
+<body class="card">
+<div th:replace="shared/header :: header('about')"/>
+
+
+<div id="main" class="card-body">
+
+
+
+    <div class="container">
+        <div class="row" style="margin-left: 230px">
+            <div class="col-lg-6 col-md-6 text-center">
+                <div class="service-box"><center>
+                    <h1 th:text="${about.name}"></h1></center>
+                    <!--<img border="0" src="statics/img/accessoryList.png" width="520" height="182">-->
+                    <div class="content"><center>
+                        <h3 th:text="${about.opis}"></h3>
+                        <p th:text="${about.dlaczego}" class="text-muted"></p></center>
+                    </div>
+                </div>
+            </div>
+
+          </div>
+
+
+        <span sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="btn btn-success" th:href="@{aboutForm.html(id=${about.id})}">Edytuj</a>
+                </span>
+
+
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+
+</div>
+</body>
+</html>
